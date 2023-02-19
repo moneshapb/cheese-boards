@@ -126,3 +126,56 @@ describe("Board and User Models Association", () => {
       );
     });
   });
+
+  // part 3  eager loading
+
+    describe("Eager Loading", () => {
+        test ("eager loading", async () => {
+
+           
+      let board1 = await Board.create(seedBoard[2]);
+      let board2 = await Board.create(seedBoard[3]);
+      let board3 = await Board.create(seedBoard[0]);
+      let board4 = await Board.create(seedBoard[1]);
+      let cheese1 = await Cheese.create(seedCheese[5]);
+      let cheese2 = await Cheese.create(seedCheese[6]);
+      let cheese3 = await Cheese.create(seedCheese[7]);
+      let cheese4 = await Cheese.create(seedCheese[8]);
+      let user1 = await User.create(seedUser[1]);
+      let user2 = await User.create(seedUser[2]);
+
+      // create some associations - create boards with cheeses
+      await board1.addCheeses([cheese1, cheese2, cheese3]);
+      await board2.addCheeses([cheese1, cheese3, cheese4]);
+      // create some associations - put cheeses in boards
+      await cheese1.addBoards([board1, board2]);
+      await cheese2.addBoards([board1]);
+      await cheese3.addBoards([board1, board2]);
+      await cheese4.addBoards([board2]);
+      // create some associations - put Boards in Users
+      await user1.addBoard(board1);
+      await user1.addBoard(board2);
+      await user2.addBoard(board3);
+      await user2.addBoard(board4);
+
+      //test eager loading - A user can be loaded with its boards
+      const users = await User.findAll({ include: Board });
+        expect(users.length).toBe(2);
+        expect(users[0].boards.length).toBe(2);
+        expect(users[1].boards.length).toBe(2);
+    
+        //test eager loading - A board can be loaded with its cheeses])
+ 
+        const boards = await Board.findAll({ include: Cheese });
+        expect(boards.length).toBe(4);
+        expect(boards[0].cheeses.length).toBe(3);
+
+
+        //test eager loading - A cheese can be loaded with its boards
+        const cheeses = await Cheese.findAll({ include: Board });
+        expect(cheeses.length).toBe(4);
+        expect(cheeses[0].boards.length).toBe(2);
+
+        })
+    })
+    
