@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { Sequelize, sequelize } = require("./db");
-const { Model } = require("sequelize");
+
 
 let User = sequelize.define("user", {
     name: {
@@ -15,7 +15,8 @@ let User = sequelize.define("user", {
 
 });
 
-module.exports = User;
+module.exports = {User
+};
 
 
 

@@ -12,7 +12,7 @@ type: DataTypes.STRING,
 
 description: {
     
-    
+
     type: DataTypes.STRING,
 
 
@@ -29,4 +29,5 @@ type: DataTypes.INTEGER,
 });
 
 
-module.exports = Board;
+module.exports = {Board
+};

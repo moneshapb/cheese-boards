@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const { Sequelize, sequelize } = require("./db");
 
 
-let cheese = sequelize.define("cheese", {
+let Cheese = sequelize.define("cheese", {
 
     title:{
         type: DataTypes.STRING,
@@ -18,4 +18,5 @@ let cheese = sequelize.define("cheese", {
 
 
 
-module.exports = cheese;
+module.exports = {Cheese
+};
